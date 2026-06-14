@@ -12,21 +12,29 @@ namespace PointsBet_Backend_Online_Code_Test
       - Fixing typos
       - Any other light-weight optimisation
     */
-    public class StringFormatter
+    public static class StringFormatter
     {
 
         //Code to improve
-        public static string ToCommaSepatatedList(string[] items, string quote)
+        /// <summary>
+        /// Converts an array of strings into a single string with each item separated by a comma and optionally enclosed in quotes.
+        /// </summary>
+        /// <param name="items">The array of strings to convert.</param>
+        /// <param name="quote">The character to use for quoting each item.</param>
+        /// <returns>A single string with the items separated by a comma and optionally enclosed in quotes.</returns>
+        public static string ToQuotedCommaSeparatedString(string[] items, char quote = '\"')
         {
-            StringBuilder qry = new StringBuilder(string.Format("{0}{1}{0}", quote, items[0]));
-
-            if (items.Length > 1)
+            if (items == null || items.Length == 0)
             {
-                for (int i = 1; i < items.Length; i++)
-                {
-                    qry.Append(string.Format(", {0}{1}{0}", quote, items[i]));
-                }
+                return string.Empty;
             }
+
+            StringBuilder qry = new StringBuilder($"{quote}{items[0]?.Trim()}{quote}");
+            
+            for (int i = 1; i < items.Length; i++)
+                {
+                    qry.Append($", {quote}{items[i]?.Trim()}{quote}");
+                }
 
             return qry.ToString();
         }
